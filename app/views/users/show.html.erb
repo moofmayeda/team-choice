@@ -5,9 +5,21 @@
 <h4>Where <%= @user.name %> has been:</h4>
 <%= render @user.pins %>
 
-<script>google.maps.event.addDomListener(window, 'load', initialize);</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-gPvsmuYbPSl0EIUng1htTbSbvFfwUbo" type="text/javascript"></script>
+<script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script>
 
 <div style='width: 800px;'>
-  <div id="map-canvas" style='width: 800px; height: 400px;'></div>
+  <div id="map" style='width: 800px; height: 400px;'></div>
 </div>
+
+<script>
+
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+
+});
+</script>
 

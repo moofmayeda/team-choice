@@ -6,7 +6,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @loc = "Space+Needle,Seattle+WA"
+
+
+    @hash = Gmaps4rails.build_markers(@user.pins) do |pin, marker|
+      marker.lat pin.lat
+      marker.lng pin.lon
+    end
   end
 
 end
