@@ -20,6 +20,7 @@ class PinsController < ApplicationController
 
   def new
     @pin = Pin.new
+    authorize! if can? :create, @pin
   end
 
   def create
@@ -31,6 +32,7 @@ class PinsController < ApplicationController
     else
       render 'new'
     end
+    authorize! if can? :create, @pin
   end
 
   def edit
