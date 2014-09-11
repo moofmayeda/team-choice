@@ -6,6 +6,7 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
+gem 'json'
 gem 'turbolinks'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
@@ -13,6 +14,7 @@ gem 'devise'
 
 gem 'cancancan', '~> 1.9'
 
+gem 'rest_client'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 

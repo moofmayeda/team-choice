@@ -16,6 +16,9 @@ class PinsController < ApplicationController
     @pin = Pin.new(pin_params)
     if @pin.save
       current_user.pins << @pin
+      respond_to do |format|
+        format.js
+      end
       flash[:notice]= "Pin created and added to your visits!"
       redirect_to user_path(current_user)
     else
@@ -34,6 +37,6 @@ class PinsController < ApplicationController
 
 private
   def pin_params
-    params.require(:pin).permit(:name, :lat, :lon)
+    params.require(:pin).permit(:name, :lat, :lon, :address)
   end
 end
