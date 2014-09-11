@@ -4,21 +4,8 @@
 
 <h4>Where <%= @user.name %> has been:</h4>
 <%= render @user.pins %>
-    <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
 
-<script>
-function initialize() {
-  var mapOptions = {
-    center: { lat: -34.397, lng: 150.644},
-    zoom: 8
-  };
-  var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);</script>
+<script>google.maps.event.addDomListener(window, 'load', initialize);</script>
 
 <div style='width: 800px;'>
   <div id="map-canvas" style='width: 800px; height: 400px;'></div>
