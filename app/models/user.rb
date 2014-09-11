@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :email, presence: true
 
+  has_and_belongs_to_many :pins
+
 end

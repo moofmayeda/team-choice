@@ -1,0 +1,17 @@
+<% if @pin.errors.any? %>
+  <ul>
+    <% @pin.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for @pin do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :lat %>
+  <%= f.text_field :lat %>
+  <%= f.label :lon %>
+  <%= f.text_field :lon %>
+  <%= f.submit(class: "btn btn-primary") %>
+<% end %>
