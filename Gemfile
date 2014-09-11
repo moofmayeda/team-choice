@@ -10,6 +10,7 @@ gem 'turbolinks'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'devise'
+gem 'cancancan', '~> 1.9'
 
 group :development do
   gem 'better_errors'
