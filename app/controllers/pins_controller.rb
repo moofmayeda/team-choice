@@ -1,11 +1,16 @@
 class PinsController < ApplicationController
 
   def index
-    @pins = Pins.all
+    @pins = Pin.all
   end
 
   def show
-    @pin = Pin.find(params[:id])
+    @pins = Pin.all
+
+    @hash = Gmaps4rails.build_markers(@pins) do |pin, marker|
+      marker.lat pin.lat
+      marker.lng pin.lon
+    end
   end
 
   def new
