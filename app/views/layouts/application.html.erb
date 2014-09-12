@@ -23,6 +23,7 @@
           <%= link_to "Sign Out", destroy_user_session_path, method: "delete", class: "btn-sm btn-primary pull-right" %>
           <%= link_to 'Account', edit_user_registration_path, class: "btn-sm btn-warning pull-right" %>
           <%= link_to "#{current_user.name}'s Profile", user_path(current_user), class: "btn-sm btn-info pull-right" %>
+          <%= link_to "New Pin", new_pin_path, class: "btn-sm btn-success pull-right", id: "new-pin-link", remote: true%>
         <% else %>
           <%= link_to "Sign up", new_user_registration_path, class: "btn-sm btn-default pull-right" %>
           <%= link_to "Login", new_user_session_path, class: "btn-sm btn-primary pull-right" %>
@@ -32,6 +33,7 @@
   </nav>
   <%= flash[:notice] %>
   <%= flash[:alert] %>
+  <span id="new-pin-form"></span>
   <%= yield %>
 </div>
 </body>

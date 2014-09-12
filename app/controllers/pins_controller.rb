@@ -2,7 +2,6 @@ class PinsController < ApplicationController
 
   def index
     @pins = Pin.all
-
     @hash = Gmaps4rails.build_markers(@pins) do |pin, marker|
       marker.lat pin.lat
       marker.lng pin.lon
@@ -11,7 +10,6 @@ class PinsController < ApplicationController
 
   def show
     @pin = Pin.find(params[:id])
-
     @hash = Gmaps4rails.build_markers(@pin) do |pin, marker|
       marker.lat pin.lat
       marker.lng pin.lon
@@ -20,6 +18,10 @@ class PinsController < ApplicationController
 
   def new
     @pin = Pin.new
+    respond_to do |format|
+      format.html { render 'new' }
+      format.js
+    end
     authorize! if can? :create, @pin
   end
 
@@ -27,8 +29,22 @@ class PinsController < ApplicationController
     @pin = Pin.new(pin_params)
     if @pin.save
       current_user.pins << @pin
-      flash[:notice]= "Pin created and added to your visits!"
-      redirect_to user_path(current_user)
+      if request.referer.include?('users')
+        @hash = Gmaps4rails.build_markers(current_user.pins) do |pin, marker|
+          marker.lat pin.lat
+          marker.lng pin.lon
+        end
+      else request.referer.include?('pins')
+        @hash = Gmaps4rails.build_markers(Pin.all) do |pin, marker|
+          marker.lat pin.lat
+          marker.lng pin.lon
+        end
+      end
+      flash.now[:notice]= "Pin created and added to your visits!"
+      respond_to do |format|
+        format.html { render 'new' }
+        format.js
+      end
     else
       render 'new'
     end

@@ -1,0 +1,4 @@
+$('#new_pin').hide();
+$('#new-pin-link').show();
+$('#all-pins').append('<%= j render(@pin) %>');
+$('#map').replaceWith('<%= j render "/layouts/map" %>')

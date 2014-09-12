@@ -22,5 +22,3 @@ class Pin < ActiveRecord::Base
     end
   end
 end
-
-
