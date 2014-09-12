@@ -17,6 +17,7 @@ gem 'cancancan', '~> 1.9'
 gem 'rest_client'
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'active_model_serializers'
 
 
 group :development do
