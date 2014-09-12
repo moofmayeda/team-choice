@@ -6,6 +6,10 @@ class PinsController < ApplicationController
       marker.lat pin.lat
       marker.lng pin.lon
     end
+    respond_to do |format|
+      format.html
+      format.json { render json: @pins }
+    end
   end
 
   def show
@@ -13,6 +17,10 @@ class PinsController < ApplicationController
     @hash = Gmaps4rails.build_markers(@pin) do |pin, marker|
       marker.lat pin.lat
       marker.lng pin.lon
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @pin }
     end
   end
 
@@ -28,25 +36,29 @@ class PinsController < ApplicationController
   def create
     @pin = Pin.new(pin_params)
     if @pin.save
-      current_user.pins << @pin
-      if request.referer.include?('users')
-        @hash = Gmaps4rails.build_markers(current_user.pins) do |pin, marker|
-          marker.lat pin.lat
-          marker.lng pin.lon
-        end
-      else request.referer.include?('pins')
-        @hash = Gmaps4rails.build_markers(Pin.all) do |pin, marker|
-          marker.lat pin.lat
-          marker.lng pin.lon
-        end
-      end
       flash.now[:notice]= "Pin created and added to your visits!"
       respond_to do |format|
-        format.html { render 'new' }
-        format.js
+        format.js do
+          current_user.pins << @pin
+          if request.referer.include?('users')
+            @hash = Gmaps4rails.build_markers(current_user.pins) do |pin, marker|
+              marker.lat pin.lat
+              marker.lng pin.lon
+            end
+          else request.referer.include?('pins')
+            @hash = Gmaps4rails.build_markers(Pin.all) do |pin, marker|
+              marker.lat pin.lat
+              marker.lng pin.lon
+            end
+          end
+        end
+        format.json { render json: @pin, status: 201 }
       end
     else
-      render 'new'
+      respond_to do |format|
+        format.js { render 'new' }
+        format.json { render json: @pin.errors, status: 422 }
+      end
     end
     authorize! if can? :create, @pin
   end

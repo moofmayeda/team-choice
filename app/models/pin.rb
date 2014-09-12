@@ -1,6 +1,8 @@
 class Pin < ActiveRecord::Base
   has_and_belongs_to_many :users
   before_create :coordinates
+  validates :address, presence: true
+  validates :name, presence: true
 
   def geocodify
     self.address.gsub!(' ', '+')
