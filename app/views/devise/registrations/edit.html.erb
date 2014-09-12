@@ -1,5 +1,8 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
+<%= link_to "Request API key", api_keys_path, id:"request-api-link", class: "btn btn-warning", method: "post", remote: "true" %>
+<span id="show-api-key"></span>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 

@@ -1,4 +1,5 @@
 class PinsController < ApplicationController
+  before_filter :restrict_access
 
   def index
     @pins = Pin.all
@@ -75,5 +76,17 @@ class PinsController < ApplicationController
 private
   def pin_params
     params.require(:pin).permit(:name, :lat, :lon, :address)
+  end
+
+  def restrict_access
+    if format_json?
+      authenticate_or_request_with_http_token do |token, options|
+        ApiKey.exists?(access_token: token)
+      end
+    end
+  end
+
+  def format_json?
+    request.format.json?
   end
 end

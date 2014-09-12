@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root to: "pins#index"
   resources :users, only: [:show, :index, :edit]
   resources :pins
+  resources :api_keys, only: [:create]
 end
